@@ -1,21 +1,33 @@
-import { FC, useMemo } from 'react';
-import { Preloader } from '../ui/preloader';
-import { OrderInfoUI } from '../ui/order-info';
+import { FC, useEffect, useMemo } from 'react';
+import { Preloader } from '@ui';
+import { OrderInfoUI } from '@ui';
 import { TIngredient } from '@utils-types';
+import {
+  selectOrder,
+  useAppDispatch,
+  useAppSelector
+} from '../../services/store';
+import { ingredientsSelectors } from '@slices/ingredients';
+import { useNavigate, useParams } from 'react-router-dom';
+import { orderActions } from '@slices/order';
 
 export const OrderInfo: FC = () => {
-  /** TODO: взять переменные orderData и ingredients из стора */
-  const orderData = {
-    createdAt: '',
-    ingredients: [],
-    _id: '',
-    status: '',
-    name: '',
-    updatedAt: 'string',
-    number: 0
-  };
+  const number = useParams().number || '';
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  /** DONE: взять переменные orderData и ingredients из стора */
+  const orderData = useAppSelector(selectOrder(number));
 
-  const ingredients: TIngredient[] = [];
+  // если локально нет - идём в сеть
+  useEffect(() => {
+    if (!orderData) {
+      dispatch(orderActions.get(+number));
+    }
+  }, [number, orderData, dispatch]);
+
+  const ingredients: TIngredient[] = useAppSelector(
+    ingredientsSelectors.selectIngredients
+  );
 
   /* Готовим данные для отображения */
   const orderInfo = useMemo(() => {
@@ -58,6 +70,11 @@ export const OrderInfo: FC = () => {
       total
     };
   }, [orderData, ingredients]);
+
+  if (number === '') {
+    navigate('/notFound');
+    return;
+  }
 
   if (!orderInfo) {
     return <Preloader />;
