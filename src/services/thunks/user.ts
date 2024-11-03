@@ -30,6 +30,8 @@ export const loginUser = createAsyncThunk<TAuthResponse, TLoginData>(
 
 export const logoutUser = createAsyncThunk(
   `${USER_SLICE_NAME}/logout`,
+  // Удаление токенов реализовано в API (вообще вся работа с токенами скрыта
+  // в API как деталь)
   logoutApi
 );
 

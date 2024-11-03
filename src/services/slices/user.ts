@@ -83,6 +83,7 @@ const user = createSlice({
     builder
       .addCase(logoutUser.fulfilled, (state) => {
         state.requestStatus = RequestStatus.Success;
+        // при успешном логауте удалить данные пользователя
         state.user = null;
         state.isUserActual = true;
       })
