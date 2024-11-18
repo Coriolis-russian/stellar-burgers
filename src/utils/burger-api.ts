@@ -61,7 +61,7 @@ type TIngredientsResponse = TServerResponse<{
   data: TIngredient[];
 }>;
 
-export type TFeedsResponse = TServerResponse<{
+type TFeedsResponse = TServerResponse<{
   orders: TOrder[];
   total: number;
   totalToday: number;
@@ -99,7 +99,7 @@ export const getOrdersApi = () =>
     return Promise.reject(data);
   });
 
-export type TNewOrderResponse = TServerResponse<{
+type TNewOrderResponse = TServerResponse<{
   order: TOrder;
   name: string;
 }>;
@@ -119,7 +119,7 @@ export const orderBurgerApi = (data: string[]) =>
     return Promise.reject(data);
   });
 
-export type TOrderResponse = TServerResponse<{
+type TOrderResponse = TServerResponse<{
   orders: TOrder[];
 }>;
 
@@ -137,7 +137,7 @@ export type TRegisterData = {
   password: string;
 };
 
-export type TAuthResponse = TServerResponse<{
+type TAuthResponse = TServerResponse<{
   refreshToken: string;
   accessToken: string;
   user: TUser;
@@ -153,11 +153,7 @@ export const registerUserApi = (data: TRegisterData) =>
   })
     .then((res) => checkResponse<TAuthResponse>(res))
     .then((data) => {
-      if (data?.success) {
-        setCookie('accessToken', data.accessToken);
-        localStorage.setItem('refreshToken', data.refreshToken);
-        return data;
-      }
+      if (data?.success) return data;
       return Promise.reject(data);
     });
 
@@ -176,11 +172,7 @@ export const loginUserApi = (data: TLoginData) =>
   })
     .then((res) => checkResponse<TAuthResponse>(res))
     .then((data) => {
-      if (data?.success) {
-        setCookie('accessToken', data.accessToken);
-        localStorage.setItem('refreshToken', data.refreshToken);
-        return data;
-      }
+      if (data?.success) return data;
       return Promise.reject(data);
     });
 
@@ -212,7 +204,7 @@ export const resetPasswordApi = (data: { password: string; token: string }) =>
       return Promise.reject(data);
     });
 
-export type TUserResponse = TServerResponse<{ user: TUser }>;
+type TUserResponse = TServerResponse<{ user: TUser }>;
 
 export const getUserApi = () =>
   fetchWithRefresh<TUserResponse>(`${URL}/auth/user`, {
@@ -240,10 +232,4 @@ export const logoutApi = () =>
     body: JSON.stringify({
       token: localStorage.getItem('refreshToken')
     })
-  }).then((res) => {
-    if (res.ok) {
-      setCookie('accessToken', '', { expiresIn: -1 });
-      localStorage.removeItem('refreshToken');
-    }
-    return checkResponse<TServerResponse<{}>>(res);
-  });
+  }).then((res) => checkResponse<TServerResponse<{}>>(res));
