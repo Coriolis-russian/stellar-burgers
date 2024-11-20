@@ -9,12 +9,12 @@ import {
   updateUser
 } from '../thunks/user';
 
-type UserState = {
+interface UserState {
   user: TUser | null;
   requestStatus: RequestStatus;
   isUserActual: boolean;
   lastError: string | null;
-};
+}
 
 const initialState: UserState = {
   user: null,

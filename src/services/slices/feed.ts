@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { FEED_SLICE_NAME } from '@slices/sliceNames';
 import { fetchFeeds } from '../thunks/feed';
 
-export type FeedState = {
+type FeedState = {
   orders: TOrder[];
   total: number;
   totalToday: number;
