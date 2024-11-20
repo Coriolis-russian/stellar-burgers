@@ -137,4 +137,4 @@ export const testRegisterData = {
   email: 'email',
   name: 'name',
   password: 'password'
-}
+};

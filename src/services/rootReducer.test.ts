@@ -17,7 +17,6 @@ import {
 } from './test-data';
 
 test('Инициализация rootReducer', () => {
-
   const store = configureStore({
     reducer: rootReducer,
     preloadedState: {
