@@ -1,9 +1,5 @@
 import orders, { ordersActions, ordersSelectors } from '@slices/orders';
-import {
-  ordersInitialState,
-  testOrderOne,
-  testOrderTwo
-} from '../test-data';
+import { ordersInitialState, testOrderOne, testOrderTwo } from '../test-data';
 import { RequestStatus } from '@utils-types';
 
 describe('Редюсер orders', () => {
