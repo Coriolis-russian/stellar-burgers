@@ -27,5 +27,6 @@
       "@slices/*": ["src/services/slices/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "./cypress.d.ts"],
+  "exclude": ["cypress.config.ts", "node_modules"]
 }
