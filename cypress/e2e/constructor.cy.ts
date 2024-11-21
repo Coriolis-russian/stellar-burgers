@@ -5,6 +5,9 @@ const SELECTOR_INGREDIENTS_BUN = '[data-cy=ingredients-bun]';
 const SELECTOR_INGREDIENTS_MAINS = '[data-cy=ingredients-mains]';
 const SELECTOR_INGREDIENTS_SAUCES = '[data-cy=ingredients-sauces]';
 
+// на этой булке всё тестируем
+const SELECTOR_BUN_NAME = 'Краторная булка N-200i';
+
 // селекторы элементов конструктора
 const SELECTOR_CONSTRUCTOR_BUN_TOP = '[data-cy=constructor-bun-top]';
 const SELECTOR_CONSTRUCTOR_MAINS = '[data-cy=constructor-mains]';
@@ -35,10 +38,10 @@ describe('Добавление ингредиентов в конструкто�
   it('Добавление булки', () => {
     cy.addSome(SELECTOR_INGREDIENTS_BUN);
     cy.get(SELECTOR_CONSTRUCTOR_BUN_TOP)
-      .contains('Краторная булка N-200i')
+      .contains(SELECTOR_BUN_NAME)
       .should('exist');
     cy.get(SELECTOR_CONSTRUCTOR_BUN_BOTTOM)
-      .contains('Краторная булка N-200i')
+      .contains(SELECTOR_BUN_NAME)
       .should('exist');
   });
 
@@ -75,19 +78,17 @@ describe('Модальное окно ингредиента', () => {
     // модалка должна быть закрыта
     cy.get(SELECTOR_OVERLAY).should('not.exist');
     // открыть модалку
-    cy.contains('Краторная булка N-200i').click();
+    cy.contains(SELECTOR_BUN_NAME).click();
     // проверка на открытие окна
     cy.contains('Детали ингредиента').should('exist');
-    cy.get(SELECTOR_MODAL_WINDOW)
-      .contains('Краторная булка N-200i')
-      .should('exist');
+    cy.get(SELECTOR_MODAL_WINDOW).contains(SELECTOR_BUN_NAME).should('exist');
   });
 
   it('Закрытие по крестику', () => {
     // модалка должна быть закрыта
     cy.get(SELECTOR_OVERLAY).should('not.exist');
     // открыть модалку
-    cy.contains('Краторная булка N-200i').click();
+    cy.contains(SELECTOR_BUN_NAME).click();
     // проверка на открытие окна
     cy.contains('Детали ингредиента').should('exist');
     // закрытие окна
@@ -100,7 +101,7 @@ describe('Модальное окно ингредиента', () => {
     // модалка должна быть закрыта
     cy.get(SELECTOR_OVERLAY).should('not.exist');
     // открыть модалку
-    cy.contains('Краторная булка N-200i').click();
+    cy.contains(SELECTOR_BUN_NAME).click();
     // проверка на открытие окна
     cy.contains('Детали ингредиента').should('exist');
     // закрытие окна по оверлею
