@@ -4,7 +4,7 @@ describe('Добавление ингредиентов в конструкто�
   beforeEach(() => {
     cy.intercept('GET', 'api/ingredients', { fixture: 'ingredients.json' });
     cy.viewport(1300, 800);
-    cy.visit('http://localhost:4000/');
+    cy.visit('');
   });
 
   afterEach(() => {
@@ -45,7 +45,7 @@ describe('Модальное окно ингредиента', () => {
   beforeEach(() => {
     cy.intercept('GET', 'api/ingredients', { fixture: 'ingredients.json' });
     cy.viewport(1300, 800);
-    cy.visit('http://localhost:4000/');
+    cy.visit('');
   });
 
   afterEach(() => {
@@ -105,7 +105,7 @@ describe('Создание заказа', () => {
     window.localStorage.setItem('refreshToken', JSON.stringify('refreshToken'));
 
     cy.viewport(1300, 800);
-    cy.visit('http://localhost:4000/');
+    cy.visit('');
   });
 
   afterEach(() => {
