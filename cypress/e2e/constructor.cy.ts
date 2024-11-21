@@ -15,6 +15,11 @@ const SELECTOR_OVERLAY = '[data-cy=overlay]';
 const SELECTOR_BUTTON_CLOSE = '[data-cy=button-close]';
 const SELECTOR_MODAL_WINDOW = '#modals';
 
+// команда для добавления одного из типа ингредиентов
+Cypress.Commands.add('addSome', (selector: string) => {
+  cy.get(selector).contains('Добавить').click();
+});
+
 describe('Добавление ингредиентов в конструктор', () => {
   beforeEach(() => {
     cy.intercept('GET', 'api/ingredients', { fixture: 'ingredients.json' });
@@ -28,7 +33,7 @@ describe('Добавление ингредиентов в конструкто�
   });
 
   it('Добавление булки', () => {
-    cy.get(SELECTOR_INGREDIENTS_BUN).contains('Добавить').click();
+    cy.addSome(SELECTOR_INGREDIENTS_BUN);
     cy.get(SELECTOR_CONSTRUCTOR_BUN_TOP)
       .contains('Краторная булка N-200i')
       .should('exist');
@@ -38,15 +43,15 @@ describe('Добавление ингредиентов в конструкто�
   });
 
   it('Добавление ингредиента', () => {
-    cy.get(SELECTOR_INGREDIENTS_MAINS).contains('Добавить').click();
+    cy.addSome(SELECTOR_INGREDIENTS_MAINS);
     cy.get(SELECTOR_CONSTRUCTOR_MAINS)
       .contains('Биокотлета из марсианской Магнолии')
       .should('exist');
   });
 
   it('Добавление ингредиента и соуса', () => {
-    cy.get(SELECTOR_INGREDIENTS_MAINS).contains('Добавить').click();
-    cy.get(SELECTOR_INGREDIENTS_SAUCES).contains('Добавить').click();
+    cy.addSome(SELECTOR_INGREDIENTS_MAINS);
+    cy.addSome(SELECTOR_INGREDIENTS_SAUCES);
     cy.get(SELECTOR_CONSTRUCTOR_MAINS)
       .contains('Биокотлета из марсианской Магнолии')
       .should('exist');
@@ -130,9 +135,12 @@ describe('Создание заказа', () => {
 
   it('Создание заказа', () => {
     // сборка бургера
-    cy.get(SELECTOR_INGREDIENTS_BUN).contains('Добавить').click();
-    cy.get(SELECTOR_INGREDIENTS_MAINS).contains('Добавить').click();
-    cy.get(SELECTOR_INGREDIENTS_SAUCES).contains('Добавить').click();
+    [
+      SELECTOR_INGREDIENTS_BUN,
+      SELECTOR_INGREDIENTS_MAINS,
+      SELECTOR_INGREDIENTS_SAUCES
+    ].forEach(cy.addSome);
+
     // ищем кнопку "Оформить заказ" и нажимаем на неё
     cy.contains('Оформить заказ').click();
 
