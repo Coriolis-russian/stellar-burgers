@@ -24,8 +24,9 @@
       "@ui-pages": ["src/components/ui/pages"],
       "@utils-types": ["src/utils/types"],
       "@api": ["src/utils/burger-api.ts"],
-      "@slices/*": ["src/services/slices/*"],
+      "@slices/*": ["src/services/slices/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src", "./cypress.d.ts"],
+  "exclude": ["cypress.config.ts", "node_modules"]
 }
