@@ -144,6 +144,18 @@ describe('Создание заказа', () => {
     // ищем кнопку "Оформить заказ" и нажимаем на неё
     cy.contains('Оформить заказ').click();
 
+    // проверить что ушли нужные идентификаторы ингредиентов
+    cy.wait('@postOrder')
+      .its('request.body')
+      .should('deep.equal', {
+        ingredients: [
+          '643d69a5c3f7b9001cfa093c',
+          '643d69a5c3f7b9001cfa0941',
+          '643d69a5c3f7b9001cfa0942',
+          '643d69a5c3f7b9001cfa093c'
+        ]
+      });
+
     // ждём модального окна с результатом
     cy.get(SELECTOR_OVERLAY).should('exist');
     cy.get(SELECTOR_MODAL_WINDOW)
