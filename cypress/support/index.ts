@@ -2,10 +2,10 @@ declare global {
   namespace Cypress {
     interface Chainable {
       /**
-       * Custom command to select DOM element by data-cy attribute.
-       * @example cy.dataCy('greeting')
+       * Команда для добавления чего-нибудь в конструктор, ищет внутри кнопку
+       * @example cy.addSome('селектор')
        */
-      dataCy(value: string): Chainable<JQuery<HTMLElement>>;
+      addSome(value: string): void;
     }
   }
 }
